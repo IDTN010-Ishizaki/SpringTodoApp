@@ -1,4 +1,4 @@
-body {
+/* body {
     background-color: hsl(240, 15%, 98%);
     color: hsl(220, 5%, 20%);
 }
@@ -10,17 +10,17 @@ table {
 input,
 button {
     padding: 6px;
-}
+} */
 
 .err {
     color: tomato;
 }
 
-.container {
+/* .container {
     background-color: white;
     border-radius: 20px;
     min-height: 92vh;
     margin: 20px;
-    padding: 1rem;
+    padding: 1.5rem;
     box-shadow: 1px 1px 4px hsl(240, 2%, 80%);
-}
+} */

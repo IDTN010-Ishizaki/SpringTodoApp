@@ -25,6 +25,7 @@ INSERT INTO todos (title, deadline) VALUES ('Memory Packを使ってファイル
 INSERT INTO todos (title, deadline) VALUES ('Qyeryableを使ったクエリプランの組み立て', '2026-08-07');
 
 INSERT INTO todos (title, deadline) VALUES ('C#でNDArray<T>を作成', '2026-12-1');
+INSERT INTO todos (title, deadline) VALUES ('ReadonrySpan<T>を使って可変長インデクサの作成', '2026-12-1');
 INSERT INTO todos (title, deadline) VALUES ('C#でNDArray<T>を継承しTensor<T> where T : INumber<T>を作成', '2026-12-10');
 INSERT INTO todos (title, deadline) VALUES ('計算グラフの作成', '2026-12-20');
 INSERT INTO todos (title, deadline) VALUES ('ILGPU カーネルの作成', '2027-01-10');
