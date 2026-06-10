@@ -1,0 +1,24 @@
+CREATE TABLE IF NOT EXISTS todos(
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_id BIGINT,
+    title VARCHAR(50) NOT NULL,
+    detail VARCHAR(100),
+    task_priority INTEGER DEFAULT 3 NOT NULL,
+    deadline TIMESTAMP,
+    task_status VARCHAR DEFAULT 'UNSTARTED',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    completed_at TIMESTAMP,
+    deleted_at TIMESTAMP
+);
+
+
+CREATE TABLE IF NOT EXISTS users (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100)
+);
+
+CREATE TABLE IF NOT EXISTS accounts(
+    email VARCHAR(255) PRIMARY KEY,
+    user_id CHAR(36) NOT NULL,
+    passward VARCHAR(60) NOT NULL
+);
