@@ -1,11 +1,8 @@
 package com.example.demo.config;
 
-import java.security.NoSuchAlgorithmException;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.example.demo.component.PasswordEncrypter;
 import com.example.demo.filter.AuthFilter;
 
 @Configuration
