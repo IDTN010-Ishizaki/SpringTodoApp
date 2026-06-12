@@ -29,7 +29,7 @@ public class UserService {
         Optional<User> existingUser = repository.findById(form.getId());
 
         if (existingUser.isPresent()) {
-            throw new UserDuplicateException();
+            throw new UserDuplicateException(form.getId());
         }
 
         if (!form.getPassword().equals(form.getPasswordRetype())) {
