@@ -50,6 +50,7 @@ button {
 
 .login-register-link {
     padding: 1rem;
+    color: cornflowerblue;
     text-align: right;
     display: inline-block;
     text-decoration: none;
@@ -63,8 +64,19 @@ button {
     padding: 0.25rem;
     border-radius: 1rem;
     border: none;
-    box-shadow: 1px 1px 3px hsl(220, 5%, 40%);
+    box-shadow: 2px 2px 3px hsl(220, 5%, 40%);
     margin: 1rem 0;
     padding: 1rem;
     width: 100%;
+}
+
+.login-btn:hover {
+    transition: all 0.1s;
+    background-color: hsl(210, 50%, 75%);
+}
+
+.login-btn:active {
+    transition: all 0.1s;
+    background-color: hsl(210, 50%, 75%);
+    box-shadow: 1px 1px 1px hsl(220, 5%, 40%);
 }
