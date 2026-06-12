@@ -2,8 +2,6 @@ package com.example.demo.dto;
 
 import java.time.LocalDateTime;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -24,6 +22,5 @@ public class TodoForm {
 
     @Future
     @NotNull(message = "日付は必須です")
-    @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
     private LocalDateTime deadline;
 }

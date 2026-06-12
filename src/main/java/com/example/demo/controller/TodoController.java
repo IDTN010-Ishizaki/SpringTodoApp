@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.dto.TodoForm;
+import com.example.demo.entity.AuthToken;
 import com.example.demo.entity.TaskStatus;
 import com.example.demo.entity.Todo;
 import com.example.demo.service.TodoService;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,24 +31,41 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/todos")
 public class TodoController {
     private TodoService service;
+    private HttpSession session;
+
+    public TodoController(TodoService service, HttpSession session) {
+        this.service = service;
+        this.session = session;
+    }
 
     @ModelAttribute("form")
-    private TodoForm form(@ModelAttribute TodoForm form) {
-        return new TodoForm();
+    private TodoForm form() {
+        TodoForm todoForm = new TodoForm();
+
+        todoForm.setDeadline(LocalDateTime.now());
+
+        return todoForm;
     }
 
     @ModelAttribute("completedTask")
-    private List<Todo> comletedTask() {
-        return service.getCompleted();
+    private List<Todo> completedTask() {
+        Optional<AuthToken> authTokenOpt = AuthToken.fromSession(session);
+
+        if (authTokenOpt.isEmpty()) {
+            return List.of();
+        } else {
+            return service.getCompleted(authTokenOpt.get());
+        }
     }
 
     @ModelAttribute("workingTask")
     private List<Todo> workingTask() {
-        return service.getWorking();
-    }
-
-    public TodoController(TodoService service) {
-        this.service = service;
+        Optional<AuthToken> authTokenOpt = AuthToken.fromSession(session);
+        if (authTokenOpt.isEmpty()) {
+            return List.of();
+        } else {
+            return service.getWorking(authTokenOpt.get());
+        }
     }
 
     @GetMapping
@@ -61,7 +82,13 @@ public class TodoController {
     @PostMapping("/register")
     public String create(@Valid @ModelAttribute("form") TodoForm form, BindingResult validation,
             RedirectAttributes redirect) {
-        log.info("/register -> /todos");
+        Optional<AuthToken> authTokenOpt = AuthToken.fromSession(session);
+
+        if (authTokenOpt.isEmpty()) {
+            log.info("not authorized redirect to /auth/login");
+            return "redirect: /auth/login";
+        }
+
         log.info("form values=" + form.toString());
         log.info("form has errors: " + validation.hasErrors());
 
@@ -73,8 +100,9 @@ public class TodoController {
             return "todos/index";
         }
 
-        service.create(form);
+        service.create(authTokenOpt.get(), form);
         redirect.addAttribute("msg", "新しいタスクを作成しました");
+        log.info("/register -> /todos");
 
         return "redirect:/todos";
     }

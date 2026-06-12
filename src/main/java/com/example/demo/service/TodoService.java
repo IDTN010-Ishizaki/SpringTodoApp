@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.TodoForm;
+import com.example.demo.entity.AuthToken;
 import com.example.demo.entity.TaskStatus;
 import com.example.demo.entity.Todo;
 import com.example.demo.exception.TodoNotFoundException;
@@ -17,19 +19,19 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class TodoService {
-    private TodoRepository repository;
+    private final TodoRepository repository;
 
-    public TodoService(TodoRepository repository) {
+    public TodoService(TodoRepository repository) throws NoSuchAlgorithmException {
         this.repository = repository;
     }
 
-    public List<Todo> getCompleted() {
-        List<Todo> todos = repository.findCompleted();
+    public List<Todo> getCompleted(AuthToken auth) {
+        List<Todo> todos = repository.findCompletedByUserId(auth.getUserId());
         return todos;
     }
 
-    public List<Todo> getWorking() {
-        List<Todo> todos = repository.findWorking();
+    public List<Todo> getWorking(AuthToken auth) {
+        List<Todo> todos = repository.findWorkingByUserId(auth.getUserId());
         return todos;
     }
 
@@ -39,13 +41,14 @@ public class TodoService {
     }
 
     @Transactional
-    public Todo create(TodoForm form) {
-        Todo todo = new Todo();
-
-        todo.setTitle(form.getTitle());
-        todo.setDetail(form.getDetail());
-        todo.setDeletedAt(form.getDeadline());
-        todo.setPriority(form.getPriority());
+    public Todo create(AuthToken auth, TodoForm form) {
+        Todo todo = Todo.builder()
+                .userId(auth.getUserId())
+                .title(form.getTitle())
+                .detail(form.getDetail())
+                .deadline(form.getDeadline())
+                .priority(form.getPriority())
+                .build();
 
         return repository.save(todo);
     }
@@ -67,8 +70,8 @@ public class TodoService {
 
         todo.setStatus(status);
 
-        LocalDateTime compltedAt = todo.getStatus() == TaskStatus.COMPLETED ? LocalDateTime.now() : null;
-        todo.setCompletedAt(compltedAt);
+        LocalDateTime completedAt = todo.getStatus() == TaskStatus.COMPLETED ? LocalDateTime.now() : null;
+        todo.setCompletedAt(completedAt);
 
         repository.save(todo);
 

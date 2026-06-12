@@ -1,4 +1,4 @@
-/* body {
+body {
     background-color: hsl(240, 15%, 98%);
     color: hsl(220, 5%, 20%);
 }
@@ -10,17 +10,61 @@ table {
 input,
 button {
     padding: 6px;
-} */
+    margin: 10px;
+}
 
 .err {
     color: tomato;
 }
 
-/* .container {
+
+.login-card {
+    margin: 0 auto;
+    padding: 20px;
+    width: 500px;
     background-color: white;
     border-radius: 20px;
-    min-height: 92vh;
-    margin: 20px;
-    padding: 1.5rem;
-    box-shadow: 1px 1px 4px hsl(240, 2%, 80%);
-} */
+    box-shadow: 1px 1px 5px hsl(220, 5%, 40%);
+}
+
+.login-card h3 {
+    text-align: center;
+}
+
+.login-form-body {
+    justify-content: center;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.login-textbox {
+    padding: 0.5rem;
+    border: solid 1px #aaa;
+    border-radius: 0.5rem;
+}
+
+.login-form-label {
+    display: inline-block;
+    min-width: 100rem;
+}
+
+.login-register-link {
+    padding: 1rem;
+    text-align: right;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.login-btn {
+    color: white;
+    font-weight: 600;
+    background-color: hsl(220, 60%, 70%);
+    font-size: 1rem;
+    padding: 0.25rem;
+    border-radius: 1rem;
+    border: none;
+    box-shadow: 1px 1px 3px hsl(220, 5%, 40%);
+    margin: 1rem 0;
+    padding: 1rem;
+    width: 100%;
+}
