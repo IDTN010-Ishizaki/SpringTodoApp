@@ -101,11 +101,11 @@ public class AuthController {
         } catch (UserDuplicateException e) {
             log.debug(e.getMessage());
 
-            model.addAttribute("msg", "すでに登録されてます");
+            model.addAttribute("msg", e.getMessage());
             return "auth/register";
         } catch (PasswordMismatchException e) {
             log.debug(e.getMessage());
-            model.addAttribute("msg", "入力したパスワードが一致しません");
+            model.addAttribute("msg", e.getMessage());
             return "auth/register";
         }
 
